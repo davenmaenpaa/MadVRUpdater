@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ProgramUpdater.iml" filepath="$PROJECT_DIR$/.idea/modules/ProgramUpdater.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ProgramUpdater_main.iml" filepath="$PROJECT_DIR$/.idea/modules/ProgramUpdater_main.iml" group="ProgramUpdater" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ProgramUpdater_test.iml" filepath="$PROJECT_DIR$/.idea/modules/ProgramUpdater_test.iml" group="ProgramUpdater" />
+    </modules>
+  </component>
+</project>
