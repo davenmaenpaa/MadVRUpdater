@@ -32,11 +32,7 @@ public class Props {
         return prop.getProperty("downloadFolder");
     }
 
-    public static String getZipFile() {
-        return prop.getProperty("zipFile");
-    }
-
-    public static String getMadvrdir() {
+    public static String getMadvrDir() {
         return prop.getProperty("madvrdir");
     }
 

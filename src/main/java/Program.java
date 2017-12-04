@@ -1,4 +1,5 @@
 import javafx.application.Application;
+
 import java.util.concurrent.TimeUnit;
 
 public class Program {
@@ -15,7 +16,7 @@ public class Program {
         }
 
         if(getVersion.checkIfUpdateNeeded()) {
-            updateMadVR.unZipIt(Props.getZipFile(), Props.getMadvrdir());
+            updateMadVR.unZipIt(Props.getDownloadFolder() + "MadVR.zip", Props.getMadvrDir());
             Application.launch(Popup.class, args);
         }
     }

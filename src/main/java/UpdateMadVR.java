@@ -12,7 +12,7 @@ public class UpdateMadVR {
         try {
 
             // Create output directory is not exists
-            File folder = new File(Props.getMadvrdir());
+            File folder = new File(Props.getMadvrDir());
             if (!folder.exists()) {
                 folder.mkdir();
             }

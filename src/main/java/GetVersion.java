@@ -2,6 +2,7 @@ import org.apache.commons.io.FileUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -12,7 +13,7 @@ import java.nio.file.Paths;
 
 public class GetVersion {
     private String readVersionFile() {
-        Path changelog = Paths.get(Props.getMadvrdir() + "changelog.txt");
+        Path changelog = Paths.get(Props.getMadvrDir() + "changelog.txt");
         try {
             return Files.lines(changelog)
                     .findFirst()
