@@ -12,19 +12,41 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 public class GetVersion {
-    private String readVersionFile() {
-        Path changelog = Paths.get(Props.getMadvrDir() + "changelog.txt");
+    private Path changelog;
+
+    private boolean ifDirectoryCorrect() {
+        changelog = Paths.get(Props.getMadvrDir() + "changelog.txt");
+
         try {
-            return Files.lines(changelog)
-                    .findFirst()
-                    .orElse("Could not find file");
-        } catch (IOException e) {
-            e.printStackTrace();
+            if (!Files.exists(changelog)) {
+
+                throw new WrongDirectory();
+            } else
+                return true;
+
+        } catch (WrongDirectory ex) {
+            ex.errorPopup();
         }
+
+
+        return false;
+    }
+
+    private String readVersionFile() {
+        if(ifDirectoryCorrect()) {
+            try {
+                return Files.lines(changelog)
+                        .findFirst()
+                        .orElse("Could not find file");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        //TODO error reading file
         return "Could not find file";
     }
 
-    private int parseFileFromComputer(String string) {
+    private int parseVersionFromFile(String string) {
         String readFile = string.replace(".", "");
 
         // Om 0 finns
@@ -37,9 +59,10 @@ public class GetVersion {
 
     public boolean checkIfUpdateNeeded() {
         String stringLatestVersion = getVersionFromPage();
+        //TODO try catch
         String stringCurrentVersion = readVersionFile();
 
-        int currentVersion = parseFileFromComputer(stringCurrentVersion);
+        int currentVersion = parseVersionFromFile(stringCurrentVersion);
         int latestVersion = parseVersionFromWeb(stringLatestVersion);
 
         if (currentVersion < latestVersion) {

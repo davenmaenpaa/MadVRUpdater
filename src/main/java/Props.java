@@ -6,7 +6,7 @@ import java.util.Properties;
 public class Props {
     static private Properties prop;
 
-    public Props() {
+    Props() {
         prop = new Properties();
         InputStream input = null;
 

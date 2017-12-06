@@ -5,8 +5,8 @@ import java.io.IOException;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
-public class UpdateMadVR {
-    public void unZipIt(String zipFile, String outputFolder) {
+public class Unzip {
+    public static void unZipIt(String zipFile, String outputFolder) {
         byte[] buffer = new byte[1024];
 
         try {

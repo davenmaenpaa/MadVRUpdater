@@ -7,7 +7,6 @@ public class Program {
         new Props();
 
         GetVersion getVersion = new GetVersion();
-        UpdateMadVR updateMadVR = new UpdateMadVR();
 
         try {
             TimeUnit.SECONDS.sleep(Props.getDelay());
@@ -16,7 +15,7 @@ public class Program {
         }
 
         if(getVersion.checkIfUpdateNeeded()) {
-            updateMadVR.unZipIt(Props.getDownloadFolder() + "MadVR.zip", Props.getMadvrDir());
+            Unzip.unZipIt(Props.getDownloadFolder() + "MadVR.zip", Props.getMadvrDir());
             Application.launch(Popup.class, args);
         }
     }
