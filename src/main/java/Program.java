@@ -14,7 +14,7 @@ public class Program {
             e.printStackTrace();
         }
 
-        if(getVersion.checkIfUpdateNeeded()) {
+        if(getVersion.checkIfUpdateNeeded() && !CheckProcess.checkProcess()) {
             Unzip.unZipIt(Props.getDownloadFolder() + "MadVR.zip", Props.getMadvrDir());
             Application.launch(Popup.class, args);
         }
