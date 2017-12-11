@@ -1,3 +1,4 @@
+import javafx.application.Application;
 import org.apache.commons.io.FileUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -8,42 +9,22 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Objects;
 
 public class GetVersion {
-    private Path changelog;
-
-    private boolean ifDirectoryCorrect() {
-        changelog = Paths.get(Props.getMadvrDir() + "changelog.txt");
-
-        try {
-            if (!Files.exists(changelog)) {
-
-                throw new WrongDirectory();
-            } else
-                return true;
-
-        } catch (WrongDirectory ex) {
-            ex.errorPopup();
-        }
-
-
-        return false;
-    }
 
     private String readVersionFile() {
-        if(ifDirectoryCorrect()) {
             try {
-                return Files.lines(changelog)
+                return Files.lines(Paths.get(Props.getMadvrDir() + "changelog.txt"))
                         .findFirst()
                         .orElse("Could not find file");
             } catch (IOException e) {
-                e.printStackTrace();
+                Application.launch(WrongDirectoryPopup.class);
             }
-        }
+
         //TODO error reading file
-        return "Could not find file";
+        return null;
     }
 
     private int parseVersionFromFile(String string) {
@@ -54,7 +35,6 @@ public class GetVersion {
             return Integer.valueOf(readFile.substring(2, readFile.length()));
 
         return Integer.valueOf(readFile.substring(1, readFile.length()));
-
     }
 
     public boolean checkIfUpdateNeeded() {
@@ -62,13 +42,17 @@ public class GetVersion {
         //TODO try catch
         String stringCurrentVersion = readVersionFile();
 
-        int currentVersion = parseVersionFromFile(stringCurrentVersion);
-        int latestVersion = parseVersionFromWeb(stringLatestVersion);
 
-        if (currentVersion < latestVersion) {
-            downloadFile();
-            return true;
+        int currentVersion = 0;
 
+        if (stringCurrentVersion != null) {
+            currentVersion = parseVersionFromFile(stringCurrentVersion);
+            int latestVersion = parseVersionFromWeb(stringLatestVersion);
+
+            if (currentVersion < latestVersion) {
+                downloadFile();
+                return true;
+            }
         }
         return false;
     }
@@ -81,7 +65,7 @@ public class GetVersion {
             e.printStackTrace();
         }
 
-        Element html = doc.select("p").first();
+        Element html = Objects.requireNonNull(doc).select("p").first();
         String string = html.toString();
 
         // Tar ut efter v i strängen
@@ -105,7 +89,7 @@ public class GetVersion {
 
         File file = new File(Props.getDownloadFolder() + "madVR.zip");
         try {
-            FileUtils.copyURLToFile(website, file);
+            FileUtils.copyURLToFile(Objects.requireNonNull(website), file);
         } catch (IOException e) {
             e.printStackTrace();
         }
