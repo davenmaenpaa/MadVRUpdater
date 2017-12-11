@@ -7,7 +7,7 @@ public class WrongDirectoryPopup extends Application {
     @Override
     public void start(Stage primaryStage) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setContentText("Wrong directory");
+        alert.setContentText("MadVR couldn't be found in directory");
         alert.setTitle("MadVR updater");
         alert.setHeaderText(null);
 
