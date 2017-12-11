@@ -9,16 +9,13 @@ public class Unzip {
     public static void unZipIt(String zipFile, String outputFolder) {
         byte[] buffer = new byte[1024];
 
-        try {
+        try(ZipInputStream zis = new ZipInputStream(new FileInputStream(zipFile))) {
 
             // Create output directory is not exists
             File folder = new File(Props.getMadvrDir());
             if (!folder.exists()) {
                 folder.mkdir();
             }
-
-            // Get the zip file content
-            ZipInputStream zis = new ZipInputStream(new FileInputStream(zipFile));
 
             // Get the zipped file list entry
             ZipEntry ze = zis.getNextEntry();
@@ -44,9 +41,6 @@ public class Unzip {
                 fos.close();
                 ze = zis.getNextEntry();
             }
-
-            zis.closeEntry();
-            zis.close();
         } catch (IOException ex) {
             ex.printStackTrace();
         }
