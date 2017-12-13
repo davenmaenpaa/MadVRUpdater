@@ -2,7 +2,7 @@ import javafx.application.Application;
 import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 
-public class Popup extends Application {
+public class UpdatedPopup extends Application {
 
     @Override
     public void start(Stage primaryStage) {
@@ -10,7 +10,6 @@ public class Popup extends Application {
         alert.setContentText("MadVR updated!");
         alert.setTitle("MadVR updater");
         alert.setHeaderText(null);
-
         alert.showAndWait();
     }
 

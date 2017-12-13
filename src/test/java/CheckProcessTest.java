@@ -6,6 +6,6 @@ public class CheckProcessTest {
 
     @Test
     public void checkProcess() {
-        assertEquals(true, CheckProcess.checkProcess());
+        assertEquals(true, CheckProcess.isProcessInUse());
     }
 }

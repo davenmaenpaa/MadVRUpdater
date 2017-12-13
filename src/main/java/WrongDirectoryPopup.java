@@ -10,7 +10,6 @@ public class WrongDirectoryPopup extends Application {
         alert.setContentText("MadVR couldn't be found in directory");
         alert.setTitle("MadVR updater");
         alert.setHeaderText(null);
-
         alert.showAndWait();
     }
 

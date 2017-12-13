@@ -23,7 +23,6 @@ public class GetVersion {
                 Application.launch(WrongDirectoryPopup.class);
             }
 
-        //TODO error reading file
         return null;
     }
 
@@ -39,11 +38,9 @@ public class GetVersion {
 
     public boolean checkIfUpdateNeeded() {
         String stringLatestVersion = getVersionFromPage();
-        //TODO try catch
         String stringCurrentVersion = readVersionFile();
 
-
-        int currentVersion = 0;
+        int currentVersion;
 
         if (stringCurrentVersion != null) {
             currentVersion = parseVersionFromFile(stringCurrentVersion);

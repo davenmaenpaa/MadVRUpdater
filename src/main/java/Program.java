@@ -5,7 +5,6 @@ import java.util.concurrent.TimeUnit;
 public class Program {
     public static void main(String[] args) {
         new Props();
-
         GetVersion getVersion = new GetVersion();
 
         try {
@@ -14,9 +13,9 @@ public class Program {
             e.printStackTrace();
         }
 
-        if(getVersion.checkIfUpdateNeeded() && !CheckProcess.checkProcess()) {
+        if(getVersion.checkIfUpdateNeeded() && !CheckProcess.isProcessInUse()) {
             Unzip.unZipIt(Props.getDownloadFolder() + "MadVR.zip", Props.getMadvrDir());
-            Application.launch(Popup.class, args);
+            Application.launch(UpdatedPopup.class, args);
         }
     }
 }
