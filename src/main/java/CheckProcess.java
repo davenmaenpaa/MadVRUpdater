@@ -15,13 +15,17 @@ public class CheckProcess {
                 if(s.contains("mpc-hc64.exe")) {
                     return true;
                 }
-
             }
-            scanner.close();
 
+            scanner.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
+
         return false;
+    }
+
+    private void validate() {
+
     }
 }

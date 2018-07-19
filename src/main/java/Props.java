@@ -25,7 +25,6 @@ public class Props {
                 }
             }
         }
-
     }
 
     public static String getDownloadFolder() {

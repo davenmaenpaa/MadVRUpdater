@@ -1,3 +1,4 @@
+import exception.WrongDirectory;
 import javafx.application.Application;
 import org.apache.commons.io.FileUtils;
 import org.jsoup.Jsoup;
@@ -12,7 +13,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Objects;
 
-public class GetVersion {
+public class VersionCheck {
 
     private String readVersionFile() {
             try {
@@ -20,7 +21,7 @@ public class GetVersion {
                         .findFirst()
                         .orElse("Could not find file");
             } catch (IOException e) {
-                Application.launch(WrongDirectoryPopup.class);
+                Application.launch(WrongDirectory.class);
             }
 
         return null;
@@ -48,14 +49,17 @@ public class GetVersion {
 
             if (currentVersion < latestVersion) {
                 downloadFile();
+
                 return true;
             }
         }
+
         return false;
     }
 
     private String getVersionFromPage() {
         Document doc = null;
+
         try {
             doc = Jsoup.connect("http://madvr.com/").get();
         } catch (IOException e) {
@@ -78,6 +82,7 @@ public class GetVersion {
 
     private void downloadFile() {
         URL website = null;
+
         try {
             website = new URL("http://madshi.net/madVR.zip");
         } catch (MalformedURLException e) {
@@ -85,6 +90,7 @@ public class GetVersion {
         }
 
         File file = new File(Props.getDownloadFolder() + "madVR.zip");
+
         try {
             FileUtils.copyURLToFile(Objects.requireNonNull(website), file);
         } catch (IOException e) {

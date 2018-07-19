@@ -1,8 +1,10 @@
+package exception;
+
 import javafx.application.Application;
 import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 
-public class WrongDirectoryPopup extends Application {
+public class WrongDirectory extends Application {
 
     @Override
     public void start(Stage primaryStage) {
