@@ -1,12 +1,14 @@
+package model;
+
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
 public class Props {
-    static private Properties prop;
+    private Properties prop;
 
-    Props() {
+    public Props() {
         prop = new Properties();
         InputStream input = null;
 
@@ -16,26 +18,18 @@ public class Props {
 
         } catch (IOException ex) {
             ex.printStackTrace();
-        } finally {
-            if (input != null) {
-                try {
-                    input.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
         }
     }
 
-    public static String getDownloadFolder() {
+    public String getDownloadFolder() {
         return prop.getProperty("downloadFolder");
     }
 
-    public static String getMadvrDir() {
+    public String getMadvrDir() {
         return prop.getProperty("madvrdir");
     }
 
-    public static int getDelay() {
+    public int getDelay() {
         return Integer.valueOf(prop.getProperty("delay"));
     }
 }

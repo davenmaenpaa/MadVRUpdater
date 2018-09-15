@@ -1,18 +1,57 @@
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
+package controller;
+
+import model.Props;
+import model.VersionCheck;
+
+import java.io.*;
+import java.util.Scanner;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
-public class Unzip {
-    public static void unZipIt(String zipFile, String outputFolder) {
+public class Update {
+    private Props props;
+    private VersionCheck versionCheck;
+
+    public Update(Props props, VersionCheck versionCheck) {
+        this.props = props;
+        this.versionCheck = versionCheck;
+    }
+
+    public void updateIfRequiredAndProcessNotInUse() {
+        if(versionCheck.updateRequired() && !processInUse()) {
+            versionCheck.downloadFile();
+            unZip(props.getDownloadFolder() + "madvr.zip", props.getMadvrDir());
+        }
+    }
+
+    private boolean processInUse() {
+        try {
+            Process process = Runtime.getRuntime().exec("tasklist.exe");
+            Scanner scanner = new Scanner(new InputStreamReader(process.getInputStream()));
+
+            while (scanner.hasNext()) {
+                if(scanner.nextLine().contains("mpc-hc64.exe")) {
+                    return true;
+                }
+            }
+
+            scanner.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return false;
+    }
+
+    public void unZip(String zipFile, String outputFolder) {
         byte[] buffer = new byte[1024];
 
         try(ZipInputStream zis = new ZipInputStream(new FileInputStream(zipFile))) {
 
             // Create output directory is not exists
-            File folder = new File(Props.getMadvrDir());
+            File folder = new File(props.getMadvrDir());
+
+
             if (!folder.exists()) {
                 folder.mkdir();
             }

@@ -1,3 +1,5 @@
+package model;
+
 import exception.WrongDirectory;
 import javafx.application.Application;
 import org.apache.commons.io.FileUtils;
@@ -14,10 +16,15 @@ import java.nio.file.Paths;
 import java.util.Objects;
 
 public class VersionCheck {
+    private Props props;
+
+    public VersionCheck(Props props) {
+        this.props = props;
+    }
 
     private String readVersionFile() {
             try {
-                return Files.lines(Paths.get(Props.getMadvrDir() + "changelog.txt"))
+                return Files.lines(Paths.get(props.getMadvrDir() + "changelog.txt"))
                         .findFirst()
                         .orElse("Could not find file");
             } catch (IOException e) {
@@ -27,7 +34,7 @@ public class VersionCheck {
         return null;
     }
 
-    private int parseVersionFromFile(String string) {
+    private int getVersionFromFile(String string) {
         String readFile = string.replace(".", "");
 
         // Om 0 finns
@@ -37,19 +44,17 @@ public class VersionCheck {
         return Integer.valueOf(readFile.substring(1, readFile.length()));
     }
 
-    public boolean checkIfUpdateNeeded() {
+    public boolean updateRequired() {
         String stringLatestVersion = getVersionFromPage();
         String stringCurrentVersion = readVersionFile();
 
         int currentVersion;
 
         if (stringCurrentVersion != null) {
-            currentVersion = parseVersionFromFile(stringCurrentVersion);
-            int latestVersion = parseVersionFromWeb(stringLatestVersion);
+            currentVersion = getVersionFromFile(stringCurrentVersion);
+            int latestVersion = getVersionFromWeb(stringLatestVersion);
 
             if (currentVersion < latestVersion) {
-                downloadFile();
-
                 return true;
             }
         }
@@ -73,14 +78,14 @@ public class VersionCheck {
         return string.substring(string.indexOf("v"), string.indexOf(":", string.indexOf("v")));
     }
 
-    private int parseVersionFromWeb(String string) {
+    private int getVersionFromWeb(String string) {
         string = string.substring(1, string.length());
         string = string.replace(".", "");
 
         return Integer.valueOf(string);
     }
 
-    private void downloadFile() {
+    public void downloadFile() {
         URL website = null;
 
         try {
@@ -89,7 +94,7 @@ public class VersionCheck {
             e.printStackTrace();
         }
 
-        File file = new File(Props.getDownloadFolder() + "madVR.zip");
+        File file = new File(props.getDownloadFolder() + "madVR.zip");
 
         try {
             FileUtils.copyURLToFile(Objects.requireNonNull(website), file);
